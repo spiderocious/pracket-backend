@@ -32,11 +32,11 @@ export const register = (app: Express): void => {
     }),
   );
 
-  // Public — single post
+  // Public — single post (drafts not visible)
   router.get(
     '/:id',
     asyncHandler(async (req, res) => {
-      const post = await PostModel.findOne({ id: req.params['id'] }).lean();
+      const post = await PostModel.findOne({ id: req.params['id'], isPublished: true }).lean();
       if (!post) throw new NotFoundError('Post');
       return ResponseUtil.ok(res, post);
     }),

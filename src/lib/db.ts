@@ -6,7 +6,7 @@ import { logger } from './logger.js';
 export const connectDB = async (): Promise<void> => {
   await mongoose.connect(env.MONGODB_URI, {
     maxPoolSize: 10,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 8086,
   });
   logger.info('MongoDB connected');
 

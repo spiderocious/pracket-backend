@@ -54,6 +54,9 @@ const schema = new Schema<ITutorDocument>(
 schema.index({ isListed: 1, verificationStatus: 1 });
 schema.index({ location: 1 });
 schema.index({ rate: 1 });
-schema.index({ subjects: 'text', bio: 'text', levels: 'text' });
+schema.index(
+  { subjects: 'text', levels: 'text', location: 'text', bio: 'text' },
+  { weights: { subjects: 10, levels: 10, location: 8, bio: 3 }, name: 'tutor_text_search' },
+);
 
 export const TutorModel = mongoose.model<ITutorDocument>('Tutor', schema);

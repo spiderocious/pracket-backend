@@ -2,14 +2,14 @@ import { z } from 'zod';
 
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-  PORT: z.coerce.number().default(5000),
+  PORT: z.coerce.number().default(8086),
 
   MONGODB_URI: z.string().min(1),
 
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRES_IN: z.string().default('7d'),
 
-  CORS_ORIGIN: z.string().default('http://localhost:5173'),
+  CORS_ORIGIN: z.string().default('*'),
 
   SMTP_HOST: z.string().default('smtp.mailtrap.io'),
   SMTP_PORT: z.coerce.number().default(587),

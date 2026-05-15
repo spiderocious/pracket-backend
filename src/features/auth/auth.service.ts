@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-import { ConflictError, NotFoundError, UnauthorizedError } from '@lib/errors.js'; // NotFoundError kept for me()
+import { ConflictError, NotFoundError, UnauthorizedError } from '@lib/errors.js';
 import { ids } from '@lib/ids.js';
 import { signToken } from '@lib/jwt.js';
 
