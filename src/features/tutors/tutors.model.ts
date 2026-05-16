@@ -20,6 +20,8 @@ export interface ITutor {
   photoKey: string;
   verificationStatus: 'pending' | 'verified' | 'rejected';
   isListed: boolean;
+  ratingAverage: number;
+  ratingCount: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,6 +49,8 @@ const schema = new Schema<ITutorDocument>(
     photoKey: { type: String, default: '' },
     verificationStatus: { type: String, enum: ['pending', 'verified', 'rejected'], default: 'pending' },
     isListed: { type: Boolean, default: false },
+    ratingAverage: { type: Number, default: 2.5 },
+    ratingCount: { type: Number, default: 0 },
   },
   { timestamps: true, collection: 'tutors' },
 );

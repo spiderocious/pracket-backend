@@ -13,6 +13,7 @@ import { register as registerSearch } from '@features/search/index.js';
 import { register as registerShortlist } from '@features/shortlist/index.js';
 import { register as registerTutors } from '@features/tutors/index.js';
 import { register as registerAdmin } from '@features/admin/index.js';
+import { register as registerReviews } from '@features/reviews/index.js';
 import { errorHandler } from '@middlewares/errorHandler.middleware.js';
 
 import { env } from './env.js';
@@ -28,6 +29,7 @@ const features = [
   registerPosts,
   registerReports,
   registerAdmin,
+  registerReviews,
 ];
 
 export const buildApp = (): express.Express => {

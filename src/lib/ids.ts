@@ -11,4 +11,5 @@ export const ids = {
   post: () => `PST_${raw()}`,
   report: () => `RPT_${raw()}`,
   shortlist: () => `SHL_${raw()}`,
+  review: () => `RVW_${raw()}`,
 };
