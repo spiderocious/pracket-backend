@@ -29,18 +29,15 @@ export const register = (app: Express): void => {
   router.get(
     '/:connectionId',
     asyncHandler(async (req: AuthRequest, res) => {
-      await assertMember(req.params['connectionId']!, req.user!.userId);
+      const connectionId = req.params['connectionId'] as string;
+      await assertMember(connectionId, req.user!.userId);
       const page = Number(req.query['page'] ?? 1);
       const limit = Math.min(Number(req.query['limit'] ?? 50), 100);
       const skip = (page - 1) * limit;
 
       const [items, total] = await Promise.all([
-        MessageModel.find({ connectionId: req.params['connectionId'] })
-          .sort({ createdAt: -1 })
-          .skip(skip)
-          .limit(limit)
-          .lean(),
-        MessageModel.countDocuments({ connectionId: req.params['connectionId'] }),
+        MessageModel.find({ connectionId }).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+        MessageModel.countDocuments({ connectionId }),
       ]);
 
       return ResponseUtil.ok(res, items, { page, total, totalPages: Math.ceil(total / limit) });
@@ -53,12 +50,13 @@ export const register = (app: Express): void => {
     [body('body').trim().notEmpty().withMessage('Message body is required')],
     validate,
     asyncHandler(async (req: AuthRequest, res) => {
-      const connection = await assertMember(req.params['connectionId']!, req.user!.userId);
+      const connectionId = req.params['connectionId'] as string;
+      const connection = await assertMember(connectionId, req.user!.userId);
       if (connection.status === 'closed') throw new ForbiddenError('Connection is closed');
 
       const message = await MessageModel.create({
         id: ids.message(),
-        connectionId: req.params['connectionId'],
+        connectionId,
         senderId: req.user!.userId,
         body: (req.body as { body: string }).body,
       });

@@ -16,6 +16,6 @@ export const listConnections = asyncHandler(async (req: AuthRequest, res) => {
 });
 
 export const getConnection = asyncHandler(async (req: AuthRequest, res) => {
-  const connection = await connectionService.getOne(req.params['id']!, req.user!.userId, req.user!.role);
+  const connection = await connectionService.getOne(req.params['id'] as string, req.user!.userId, req.user!.role);
   return ResponseUtil.ok(res, connection);
 });

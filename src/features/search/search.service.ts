@@ -52,12 +52,13 @@ class SearchService {
 
       // When sort=relevance, rank by MongoDB text score (field-weighted).
       // For price sorts we still apply the text filter but sort by rate.
-      const sortOption =
-        sort === 'price' ? { rate: 1 as const }
-        : sort === 'price_desc' ? { rate: -1 as const }
-        : { score: { $meta: 'textScore' as const } };
+      type SortOption = Record<string, 1 | -1 | { $meta: string }>;
+      const sortOption: SortOption =
+        sort === 'price' ? { rate: 1 }
+        : sort === 'price_desc' ? { rate: -1 }
+        : { score: { $meta: 'textScore' } };
 
-      const projection = textTerms ? { score: { $meta: 'textScore' as const } } : {};
+      const projection = { score: { $meta: 'textScore' as const } };
 
       const [items, total] = await Promise.all([
         TutorModel.find(filter, projection).sort(sortOption).skip(skip).limit(limit).lean(),

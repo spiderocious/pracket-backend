@@ -5,7 +5,7 @@ import type { AuthRequest } from '@middlewares/auth.middleware.js';
 import { tutorService } from './tutors.service.js';
 
 export const getPublicProfile = asyncHandler(async (req, res) => {
-  const tutor = await tutorService.getPublicProfile(req.params['id']!);
+  const tutor = await tutorService.getPublicProfile(req.params['id'] as string);
   return ResponseUtil.ok(res, tutor);
 });
 

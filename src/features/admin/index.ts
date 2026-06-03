@@ -22,7 +22,7 @@ export const register = (app: Express): void => {
   router.get(
     '/credentials',
     asyncHandler(async (req, res) => {
-      const status = (req.query['status'] as string) ?? 'pending';
+      const status = ((req.query['status'] as string) ?? 'pending') as 'pending' | 'approved' | 'rejected';
       const credentials = await CredentialModel.find({ reviewStatus: status }).sort({ createdAt: 1 }).lean();
       return ResponseUtil.ok(res, credentials);
     }),
@@ -87,7 +87,7 @@ export const register = (app: Express): void => {
   router.get(
     '/reports',
     asyncHandler(async (req, res) => {
-      const status = (req.query['status'] as string) ?? 'pending';
+      const status = ((req.query['status'] as string) ?? 'pending') as 'pending' | 'resolved';
       const reports = await ReportModel.find({ status }).sort({ createdAt: 1 }).lean();
       return ResponseUtil.ok(res, reports);
     }),
